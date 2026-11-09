@@ -48,5 +48,12 @@ h2 { font-size: 13px; margin: 18px 0 6px; color: #aaa; text-transform: uppercase
 .colors input { width: 34px; height: 34px; padding: 0; border: 2px dashed #888; border-radius: 6px; background: none; }
 
 .start { display: block; width: 100%; margin-top: 22px; padding: 14px; background: var(--red); border: 0; border-radius: 24px; font-weight: 700; letter-spacing: .05em; }
+.lang .install { margin-right: auto; background: none; border: 1px solid #555; }
+.help { width: min(92vw, 480px); background: var(--panel); color: #eee; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.help::backdrop { background: rgba(0, 0, 0, .7); }
+.help h2 { margin-top: 0; color: #eee; font-size: 17px; text-transform: none; letter-spacing: 0; }
+.help details { border-bottom: 1px solid var(--line); padding: 10px 0; }
+.help summary { font-weight: 700; cursor: pointer; }
+.help ol { margin: 8px 0 0; padding-left: 20px; line-height: 1.5; }
 .start.ghost { background: none; border: 2px solid var(--red); margin-top: 10px; }
 .hint { text-align: center; color: #777; font-size: 12px; }

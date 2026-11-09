@@ -8,13 +8,25 @@ const T = {
     wake: 'Keep screen on', fontCfg: 'Font settings', font: 'Font', size: 'Font size', color: 'Font color', bg: 'Background color',
     effects: 'Effects', led: 'LED dots', dot: 'LED dot size', glow: 'Glow', rainbow: 'Rainbow', bright: 'Brightness',
     save: 'Save', saved: 'Saved messages', share: 'SHARE LINK', copied: 'Link copied!',
-    start: 'START', exit: 'Tap the sign to exit', left: 'Left', right: 'Right', pause: 'Pause', del: 'Delete' },
+    start: 'START', exit: 'Tap the sign to exit', left: 'Left', right: 'Right', pause: 'Pause', del: 'Delete',
+    install: 'Install', installTitle: 'Install the app', installNow: 'Install now', close: 'Close',
+    howto: {
+      ios: ['iPhone / iPad', 'Open this page in Safari (or Chrome on iOS 16.4+).', 'Tap the Share button (square with an arrow).', 'Choose "Add to Home Screen", then "Add".'],
+      android: ['Android', 'Open this page in Chrome.', 'Tap the ⋮ menu (top right).', 'Choose "Install app" or "Add to Home screen".'],
+      desktop: ['Computer', 'Open this page in Chrome or Edge.', 'Click the install icon in the address bar, or open the ⋮ / … menu and choose "Install LED Scroll".'],
+    } },
   es: { text: 'Texto', scroll: 'Configuración de desplazamiento', dir: 'Dirección de desplazamiento', speed: 'Velocidad de desplazamiento',
     blink: 'Parpadeo', blinkHz: 'Frecuencia de parpadeo', wake: 'Mantener la pantalla encendida', fontCfg: 'Configuraciones de fuente',
     font: 'Fuente', size: 'Tamaño de fuente', color: 'Color de fuente', bg: 'Color de fondo',
     effects: 'Efectos', led: 'Puntos LED', dot: 'Tamaño de puntos LED', glow: 'Resplandor', rainbow: 'Arcoíris', bright: 'Brillo',
     save: 'Guardar', saved: 'Mensajes guardados', share: 'COMPARTIR ENLACE', copied: '¡Enlace copiado!',
-    start: 'COMIENZO', exit: 'Toca el letrero para salir', left: 'Izquierda', right: 'Derecha', pause: 'Pausa', del: 'Borrar' },
+    start: 'COMIENZO', exit: 'Toca el letrero para salir', left: 'Izquierda', right: 'Derecha', pause: 'Pausa', del: 'Borrar',
+    install: 'Instalar', installTitle: 'Instalar la app', installNow: 'Instalar ahora', close: 'Cerrar',
+    howto: {
+      ios: ['iPhone / iPad', 'Abre esta página en Safari (o Chrome en iOS 16.4+).', 'Toca el botón Compartir (cuadro con flecha).', 'Elige "Agregar a inicio" y luego "Agregar".'],
+      android: ['Android', 'Abre esta página en Chrome.', 'Toca el menú ⋮ (arriba a la derecha).', 'Elige "Instalar app" o "Agregar a la pantalla principal".'],
+      desktop: ['Computadora', 'Abre esta página en Chrome o Edge.', 'Haz clic en el icono de instalar en la barra de direcciones, o abre el menú ⋮ / … y elige "Instalar LED Scroll".'],
+    } },
 }
 
 const FONTS = [
@@ -79,10 +91,35 @@ function Colors({ value, onChange }) {
   )
 }
 
+const ua = navigator.userAgent
+const OS = /iPhone|iPad|iPod/.test(ua) || (/Mac/.test(ua) && navigator.maxTouchPoints > 1) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop'
+const installed = matchMedia('(display-mode: standalone)').matches || navigator.standalone
+// Chrome/Edge/Android hand us a real install prompt; iOS never does, so it only gets instructions.
+let installPrompt = null
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e })
+
+function InstallHelp({ t, onClose }) {
+  const ref = useRef()
+  useEffect(() => ref.current.showModal(), [])
+  const install = async () => { await installPrompt.prompt(); installPrompt = null; onClose() }
+  return (
+    <dialog ref={ref} className="help" onClose={onClose}>
+      <h2>{t.installTitle}</h2>
+      {installPrompt && <button className="start" onClick={install}>{t.installNow}</button>}
+      {['ios', 'android', 'desktop'].map(os => {
+        const [name, ...steps] = t.howto[os]
+        return <details key={os} open={os === OS}><summary>{name}</summary><ol>{steps.map(x => <li key={x}>{x}</li>)}</ol></details>
+      })}
+      <form method="dialog"><button className="start ghost">{t.close}</button></form>
+    </dialog>
+  )
+}
+
 function App() {
   const [s, setS] = useState(load)
   const [full, setFull] = useState(false)
   const [toast, setToast] = useState('')
+  const [help, setHelp] = useState(false)
   const set = patch => setS(p => ({ ...p, ...patch }))
   const t = T[s.lang]
 
@@ -122,7 +159,9 @@ function App() {
     <main>
       <Display s={s} />
       <div className="panel">
+        {help && <InstallHelp t={t} onClose={() => setHelp(false)} />}
         <div className="lang">
+          {!installed && <button className="install" onClick={() => setHelp(true)}>📲 {t.install}</button>}
           {['es', 'en'].map(l => <button key={l} className={s.lang === l ? 'on' : ''} onClick={() => set({ lang: l })}>{l.toUpperCase()}</button>)}
         </div>
         <div className="textrow">
