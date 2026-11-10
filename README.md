@@ -13,4 +13,10 @@ npm run check     # format, lint, type check, unit tests
 npm run build && npm run preview   # production build; the service worker only runs here
 ```
 
+## How it is wired
+
+![Architecture](docs/architecture/wiring.svg)
+
+Editable source: [`docs/architecture/wiring.excalidraw`](docs/architecture/wiring.excalidraw) (open it at excalidraw.com).
+
 Pushing to `master` deploys to GitHub Pages. Conventions: [`CODE_STYLE.md`](CODE_STYLE.md), [`STACK.md`](STACK.md), [`CLAUDE.md`](CLAUDE.md).

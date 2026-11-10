@@ -4,6 +4,13 @@ Smaller decisions made while developing, newest first. A decision that changes a
 
 Each entry has the decision, the reason, and who decided (**user**, or **dev** when it was taken while implementing and not objected to).
 
+## 2026-11-09: Architecture diagram and font exception
+
+| Decision                                                                                                                                                                  | Why                                                          | By         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ---------- |
+| One Excalidraw diagram of the wiring, `docs/architecture/wiring.excalidraw`, with an SVG copy for GitHub. Re-export the SVG from Excalidraw whenever the diagram changes. | Asked by the user; GitHub renders SVG but not `.excalidraw`. | user / dev |
+| Roboto is exempt from Impeccable's overused-font rule (`.impeccable/config.json`).                                                                                        | The font picker mirrors the reference app's Roboto variants. | user       |
+
 ## 2026-11-09: Guidelines and TypeScript
 
 Larger decision: [ADR 0001](docs/adr/0001-scaled-down-baseline.md) (scaled-down baseline for a one-screen app).
