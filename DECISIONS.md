@@ -4,6 +4,13 @@ Smaller decisions made while developing, newest first. A decision that changes a
 
 Each entry has the decision, the reason, and who decided (**user**, or **dev** when it was taken while implementing and not objected to).
 
+## 2026-11-11: Custom domains
+
+| Decision                                                                                                                                                                                                 | Why                                                                                                                                                                                                                                                                                     | By   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- |
+| Serve the app at `oficinamentaldebruno.com/ledscroll` and `gerardoleon.dev/ledscroll`.                                                                                                                   | Asked by the user.                                                                                                                                                                                                                                                                      | user |
+| A Cloudflare Worker on both routes forwards to GitHub Pages and rewrites GitHub's redirects back to the visitor's domain; `/ledscroll` redirects to `/ledscroll/`. Pasted in the dashboard, no Wrangler. | GitHub Pages allows one custom domain per site, and a subpath on a domain used by other sites can't point at Pages through DNS. One deploy (Pages) keeps all three URLs in sync. Each domain is its own origin, so installs, saved messages and settings don't carry over between them. | dev  |
+
 ## 2026-11-09: Architecture diagram and font exception
 
 | Decision                                                                                                                                                                  | Why                                                          | By         |

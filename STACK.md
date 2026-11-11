@@ -41,4 +41,4 @@ Approved and forbidden libraries. Adding a package means asking first and record
 
 - No backend, no routing, no design-system library: native elements styled with the tokens in `src/style.css`.
 - Fonts: Google Fonts stylesheet, cached by the service worker for offline use.
-- Hosting: GitHub Pages, deployed by `.github/workflows/pages.yml` from `master`.
+- Hosting: GitHub Pages, deployed by `.github/workflows/pages.yml` from `master`. Custom domains (`oficinamentaldebruno.com/ledscroll`, `gerardoleon.dev/ledscroll`) go through a Cloudflare Worker, `cloudflare/ledscroll-proxy.js`, pasted into the Cloudflare dashboard (no Wrangler package).

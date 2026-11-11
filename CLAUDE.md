@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-LED Scroll: an installable PWA (React + TypeScript + Vite) that turns a phone into a scrolling LED sign, in Spanish and English. Live at https://elparaquecosadeque.github.io/ledscroll/.
+LED Scroll: an installable PWA (React + TypeScript + Vite) that turns a phone into a scrolling LED sign, in Spanish and English. Live at https://oficinamentaldebruno.com/ledscroll/ and https://gerardoleon.dev/ledscroll/ (a Cloudflare Worker in `cloudflare/` forwarding to GitHub Pages at https://elparaquecosadeque.github.io/ledscroll/).
 
 Read these before writing code:
 
